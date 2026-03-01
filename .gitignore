@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+.env
+
+# Training outputs
+outputs/
+runs/
+wandb/
+
+# OS
+.DS_Store
+Thumbs.db
