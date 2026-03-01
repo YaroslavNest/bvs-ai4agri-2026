@@ -108,8 +108,15 @@ Training samples where all pixels were constant were removed from the training s
 
 Per-sample MinMax normalization:
 
-```python```
-```(x - x_min) / (x_max - x_min)```
+  ```(x - x_min) / (x_max - x_min)```
+
+### HS Normalization
+
+1. Spectral trimming (125 → 101 channels)
+2. Scaling by 65535
+3. Per-channel mean/std computation on training folds
+4. Standardization:
+  ```(x - mean_channel) / std_channel```
 
 ## 🏋️ Training Setup
 
@@ -130,15 +137,18 @@ Models are trained independently and combined using **weighted blending**.
 
 Weights are selected via grid search on OOF logits:
 
-```python```
 ```logits_mix = w_ms * logits_ms \```
            ```+ w_rgb * logits_rgb \```
            ```+ w_hs * logits_hs```
 
 Final predictions are obtained by applying softmax over blended logits.
 
+---
+
 📈 Results
 Public Leaderboard Accuracy: 0.726
+
+---
 
 📌 Observations
 
@@ -170,3 +180,4 @@ Most alternatives either:
 Despite extensive experimentation, the most stable and performant solution remained:
 Independent modality training + OOF-based weighted blending
 Careful normalization and stable cross-validation design were the key contributors to final performance.
+
